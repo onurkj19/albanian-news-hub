@@ -66,6 +66,15 @@ app.get("/api/health", (_req, res) => {
   res.json({ success: true, timestamp: new Date().toISOString() });
 });
 
+// Serve frontend in production
+if (CONFIG.isProduction) {
+  const frontendPath = path.resolve(__dirname, "..", "..", "dist");
+  app.use(express.static(frontendPath, { maxAge: "7d" }));
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
+  });
+}
+
 // Error handling
 app.use((err: Error, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
   console.error("[Server Error]", err.message);
