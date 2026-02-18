@@ -1,110 +1,103 @@
-import { categories, mockArticles } from "@/data/mockData";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight, Clock, TrendingUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Link } from "react-router-dom";
-import { ArrowRight, Clock } from "lucide-react";
+import { NewsletterForm } from "@/components/common/NewsletterForm";
+import { CATEGORIES, TRENDING_TOPICS } from "@/constants";
+import { getLatestArticles } from "@/services/articleService";
+import type { Article } from "@/types";
 
 export function Sidebar() {
-  const latestArticles = mockArticles.slice(0, 3);
+  const [latestArticles, setLatestArticles] = useState<Article[]>([]);
+
+  useEffect(() => {
+    getLatestArticles(5).then(setLatestArticles);
+  }, []);
 
   return (
     <aside className="space-y-6">
       {/* Categories */}
       <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Kategoritë</CardTitle>
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base">Kategoritë</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3">
-          {categories.map((category) => (
+        <CardContent className="space-y-2">
+          {CATEGORIES.map((category) => (
             <Link
               key={category.slug}
               to={`/${category.slug}`}
-              className="flex items-center justify-between hover:text-primary transition-colors group"
+              className="flex items-center justify-between py-1.5 hover:text-primary transition-colors group"
             >
-              <span className="text-sm font-medium">{category.name}</span>
-              <div className="flex items-center space-x-2">
-                <Badge variant="secondary" className="text-xs">
-                  {category.count}
-                </Badge>
-                <ArrowRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
+              <span className="text-sm">{category.name}</span>
+              <ArrowRight className="h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Link>
           ))}
         </CardContent>
       </Card>
 
       {/* Latest Articles */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center">
-            <Clock className="h-4 w-4 mr-2" />
-            Më të Rejat
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {latestArticles.map((article) => (
-            <Link
-              key={article.id}
-              to={`/artikull/${article.id}`}
-              className="block group"
-            >
-              <div className="flex space-x-3">
-                <img
-                  src={article.imageUrl}
-                  alt={article.title}
-                  className="w-16 h-16 object-cover rounded flex-shrink-0"
-                />
-                <div className="flex-1 min-w-0">
+      {latestArticles.length > 0 && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base flex items-center gap-2">
+              <Clock className="h-4 w-4" />
+              Më të Rejat
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {latestArticles.map((article, index) => (
+              <Link
+                key={article.id}
+                to={`/artikull/${article.slug}`}
+                className="flex gap-3 group"
+              >
+                <span className="text-2xl font-bold text-muted-foreground/30 leading-none flex-shrink-0 w-6 text-right">
+                  {index + 1}
+                </span>
+                <div className="flex-1 min-w-0 space-y-0.5">
                   <h4 className="text-sm font-medium line-clamp-2 group-hover:text-primary transition-colors">
                     {article.title}
                   </h4>
-                  <div className="flex items-center mt-1 text-xs text-muted-foreground">
-                    <span>{article.publishedAt}</span>
-                    <span className="mx-1">•</span>
+                  <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                    <span>{article.readTime}</span>
+                    <span>·</span>
                     <span>{article.category}</span>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
-        </CardContent>
-      </Card>
+              </Link>
+            ))}
+          </CardContent>
+        </Card>
+      )}
 
-      {/* Weather Widget */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Moti në Tiranë</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="text-center">
-            <div className="text-3xl font-bold text-primary">22°C</div>
-            <div className="text-sm text-muted-foreground">I kthjellët</div>
-            <div className="mt-4 grid grid-cols-3 gap-2 text-xs">
-              <div className="text-center">
-                <div className="font-medium">Nesër</div>
-                <div className="text-muted-foreground">24°C</div>
-              </div>
-              <div className="text-center">
-                <div className="font-medium">Pasnesër</div>
-                <div className="text-muted-foreground">21°C</div>
-              </div>
-              <div className="text-center">
-                <div className="font-medium">E premte</div>
-                <div className="text-muted-foreground">19°C</div>
-              </div>
+      {/* Trending Topics */}
+      {TRENDING_TOPICS.length > 0 && (
+        <Card>
+          <CardHeader className="pb-3">
+            <CardTitle className="text-base flex items-center gap-2">
+              <TrendingUp className="h-4 w-4" />
+              Tema në Trend
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="flex flex-wrap gap-2">
+              {TRENDING_TOPICS.slice(0, 8).map((topic) => (
+                <Link key={topic} to={`/kerko?q=${encodeURIComponent(topic)}`}>
+                  <Badge
+                    variant="secondary"
+                    className="hover:bg-primary hover:text-primary-foreground cursor-pointer transition-colors text-xs"
+                  >
+                    #{topic}
+                  </Badge>
+                </Link>
+              ))}
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardContent>
+        </Card>
+      )}
 
-      {/* Advertisement Space */}
-      <Card>
-        <CardContent className="p-4">
-          <div className="bg-muted rounded-lg h-32 flex items-center justify-center text-muted-foreground text-sm">
-            Hapësirë Reklamuese
-          </div>
-        </CardContent>
-      </Card>
+      <NewsletterForm variant="card" />
     </aside>
   );
 }

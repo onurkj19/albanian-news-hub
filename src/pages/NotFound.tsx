@@ -1,27 +1,37 @@
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { Home, Search, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { SITE_NAME } from "@/constants";
 
-const NotFound = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
-  }, [location.pathname]);
-
+export default function NotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-gray-600 mb-4">Oops! Page not found</p>
-        <a href="/" className="text-blue-500 hover:text-blue-700 underline">
-          Return to Home
-        </a>
+    <div className="min-h-screen bg-background flex items-center justify-center px-4">
+      <div className="text-center space-y-6 max-w-md">
+        <div className="space-y-2">
+          <div className="bg-primary text-primary-foreground px-3 py-1 rounded-md font-black text-lg inline-block">
+            {SITE_NAME}
+          </div>
+          <h1 className="text-7xl font-black text-primary">404</h1>
+          <h2 className="text-xl font-bold text-foreground">Faqja nuk u gjet</h2>
+          <p className="text-muted-foreground">
+            Faqja që po kërkoni nuk ekziston ose është zhvendosur.
+          </p>
+        </div>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Button asChild>
+            <Link to="/">
+              <Home className="h-4 w-4 mr-2" />
+              Kryefaqja
+            </Link>
+          </Button>
+          <Button variant="outline" asChild>
+            <Link to="/kerko">
+              <Search className="h-4 w-4 mr-2" />
+              Kërko
+            </Link>
+          </Button>
+        </div>
       </div>
     </div>
   );
-};
-
-export default NotFound;
+}

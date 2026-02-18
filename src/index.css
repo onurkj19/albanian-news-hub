@@ -2,34 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ALNN Albanian News Network Design System 
-Professional news portal inspired by CNN with Albanian cultural aesthetics
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    /* Main brand colors - Professional news portal palette */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 9%;
+    --background: 0 0% 98%;
+    --foreground: 220 15% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 9%;
+    --card-foreground: 220 15% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 9%;
+    --popover-foreground: 220 15% 10%;
 
-    /* Albanian Red - Primary brand color */
     --primary: 0 84% 50%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 0 84% 45%;
 
-    /* Professional grays */
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 15%;
+    --secondary: 220 10% 96%;
+    --secondary-foreground: 220 15% 15%;
 
-    --muted: 0 0% 95%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 220 10% 95%;
+    --muted-foreground: 220 10% 45%;
 
     --accent: 0 84% 50%;
     --accent-foreground: 0 0% 100%;
@@ -37,59 +28,40 @@ All colors MUST be HSL.
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 96%;
+    --border: 220 13% 91%;
+    --input: 220 10% 96%;
     --ring: 0 84% 50%;
 
-    /* News-specific colors */
     --breaking: 0 100% 50%;
     --breaking-foreground: 0 0% 100%;
-    
+
     --urgent: 30 100% 50%;
     --urgent-foreground: 0 0% 100%;
-    
-    --live: 120 100% 35%;
+
+    --live: 142 76% 36%;
     --live-foreground: 0 0% 100%;
 
-    /* Typography and spacing */
-    --radius: 0.25rem;
-
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --radius: 0.5rem;
   }
 
   .dark {
-    /* Dark mode for professional news reading */
-    --background: 0 0% 8%;
-    --foreground: 0 0% 95%;
+    --background: 220 15% 8%;
+    --foreground: 220 10% 95%;
 
-    --card: 0 0% 12%;
-    --card-foreground: 0 0% 95%;
+    --card: 220 15% 11%;
+    --card-foreground: 220 10% 95%;
 
-    --popover: 0 0% 12%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 220 15% 11%;
+    --popover-foreground: 220 10% 95%;
 
     --primary: 0 84% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 90%;
+    --secondary: 220 15% 16%;
+    --secondary-foreground: 220 10% 90%;
 
-    --muted: 0 0% 18%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 220 15% 18%;
+    --muted-foreground: 220 10% 60%;
 
     --accent: 0 84% 55%;
     --accent-foreground: 0 0% 100%;
@@ -97,27 +69,18 @@ All colors MUST be HSL.
     --destructive: 0 84% 65%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 15%;
+    --border: 220 15% 20%;
+    --input: 220 15% 16%;
     --ring: 0 84% 55%;
 
-    /* Dark mode news colors */
     --breaking: 0 100% 60%;
     --breaking-foreground: 0 0% 100%;
-    
+
     --urgent: 30 100% 60%;
     --urgent-foreground: 0 0% 100%;
-    
-    --live: 120 100% 45%;
+
+    --live: 142 76% 46%;
     --live-foreground: 0 0% 100%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
 
@@ -126,8 +89,14 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
   }
 }
 
@@ -138,11 +107,101 @@ All colors MUST be HSL.
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  
+
   .line-clamp-3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Article prose styling */
+.article-content h2 {
+  @apply text-xl font-bold mt-6 mb-3 text-foreground;
+}
+
+.article-content h3 {
+  @apply text-lg font-semibold mt-5 mb-2 text-foreground;
+}
+
+.article-content p {
+  @apply mb-4 leading-relaxed text-foreground/90;
+}
+
+.article-content ul {
+  @apply list-disc pl-6 mb-4 space-y-1;
+}
+
+.article-content li {
+  @apply text-foreground/90;
+}
+
+.article-content blockquote {
+  @apply border-l-4 border-primary pl-4 italic my-6 text-muted-foreground;
+}
+
+.article-content a {
+  @apply text-primary underline hover:text-primary/80;
+}
+
+.article-content img {
+  @apply rounded-lg my-4 w-full;
+}
+
+/* TipTap Editor */
+.tiptap {
+  min-height: 200px;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  @apply text-muted-foreground pointer-events-none float-left h-0;
+  content: attr(data-placeholder);
+}
+
+.tiptap:focus {
+  outline: none;
+}
+
+.tiptap h2 {
+  @apply text-xl font-bold mt-4 mb-2;
+}
+
+.tiptap h3 {
+  @apply text-lg font-semibold mt-3 mb-1;
+}
+
+.tiptap ul {
+  @apply list-disc pl-6 mb-3;
+}
+
+.tiptap ol {
+  @apply list-decimal pl-6 mb-3;
+}
+
+.tiptap blockquote {
+  @apply border-l-4 border-primary pl-4 italic my-4 text-muted-foreground;
+}
+
+.tiptap a {
+  @apply text-primary underline;
+}
+
+.tiptap img {
+  @apply rounded-lg max-w-full my-2;
+}
+
+.tiptap pre {
+  @apply bg-muted p-3 rounded-md font-mono text-sm my-3 overflow-x-auto;
+}
+
+.tiptap code {
+  @apply bg-muted px-1 py-0.5 rounded text-sm font-mono;
 }
